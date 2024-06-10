@@ -1,0 +1,38 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  deals     Deal[]
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Deal {
+  amount      Float?
+  closeDate   DateTime?
+  createdAt   DateTime        @default(now())
+  description String?
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  status      EnumDealStatus?
+  title       String?
+  updatedAt   DateTime        @updatedAt
+  user        User?           @relation(fields: [userId], references: [id])
+  userId      String?         @db.ObjectId
+}
+
+enum EnumDealStatus {
+  Option1
+}
