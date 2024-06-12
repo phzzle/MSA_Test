@@ -4,6 +4,9 @@ import { redisStore } from "cache-manager-ioredis-yet";
 import { UserModule } from "./user/user.module";
 import { ProductModule } from "./product/product.module";
 import { OrderModule } from "./order/order.module";
+import { OrganizationModule } from "./organization/organization.module";
+import { RoleModule } from "./role/role.module";
+import { TenantModule } from "./tenant/tenant.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -27,6 +30,9 @@ import { AuthModule } from "./auth/auth.module";
     UserModule,
     ProductModule,
     OrderModule,
+    OrganizationModule,
+    RoleModule,
+    TenantModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,
