@@ -27,6 +27,9 @@ export class TenantControllerBase {
   constructor(protected readonly service: TenantService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Tenant })
+  @swagger.ApiBody({
+    type: TenantCreateInput,
+  })
   async createTenant(@common.Body() data: TenantCreateInput): Promise<Tenant> {
     return await this.service.createTenant({
       data: data,
@@ -96,6 +99,9 @@ export class TenantControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Tenant })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: TenantUpdateInput,
+  })
   async updateTenant(
     @common.Param() params: TenantWhereUniqueInput,
     @common.Body() data: TenantUpdateInput
