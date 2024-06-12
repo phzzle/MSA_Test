@@ -1,0 +1,74 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Product {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  price     Float?
+  quantity  Int?
+  tenant    String?
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  createdAt   DateTime         @default(now())
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  orderDate   DateTime?
+  status      EnumOrderStatus?
+  tenant      String?
+  totalAmount Float?
+  updatedAt   DateTime         @updatedAt
+}
+
+model Organization {
+  address   String?
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  tenant    Tenant?  @relation(fields: [tenantId], references: [id])
+  tenantId  String?  @db.ObjectId
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  createdAt   DateTime @default(now())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String?
+  permissions String?
+  tenant      Tenant?  @relation(fields: [tenantId], references: [id])
+  tenantId    String?  @db.ObjectId
+  updatedAt   DateTime @updatedAt
+}
+
+model Tenant {
+  createdAt     DateTime       @default(now())
+  description   String?
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  organizations Organization[]
+  roles         Role[]
+  updatedAt     DateTime       @updatedAt
+}
+
+enum EnumOrderStatus {
+  Option1
+}
