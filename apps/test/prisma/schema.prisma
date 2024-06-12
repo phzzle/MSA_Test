@@ -18,3 +18,27 @@ model User {
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
+
+model Product {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  price     Float?
+  quantity  Int?
+  tenant    String?
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  createdAt   DateTime         @default(now())
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  orderDate   DateTime?
+  status      EnumOrderStatus?
+  tenant      String?
+  totalAmount Float?
+  updatedAt   DateTime         @updatedAt
+}
+
+enum EnumOrderStatus {
+  Option1
+}
